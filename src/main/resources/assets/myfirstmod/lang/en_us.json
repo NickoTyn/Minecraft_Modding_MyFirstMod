@@ -1,0 +1,24 @@
+{
+
+
+  "item.myfirstmod.zircon": "Zircon",
+  "item.myfirstmod.raw_zircon": "Raw Zircon",
+  "item.myfirstmod.zircon_block": "Zircon Block",
+  "item.myfirstmod.zircon_ore": "Zircon Ore",
+  "item.myfirstmod.eight_ball": "8-Ball",
+  "item.myfirstmod.blueberry_seeds": "Blueberry Seeds",
+  "item.myfirstmod.blueberry": "Blueberry",
+
+
+
+  "itemGroup.myfirstmodtab": "My First Mod TAB",
+  "entity.minecraft.villager.myfirstmod.lamp_master":  "Lamp Master",
+
+
+  "block.myfirstmod.zircon_block": "Block of Zircon",
+  "block.myfirstmod.zircon_ore": "Zircon Ore",
+  "block.myfirstmod.deepslate_zircon_ore": "Deepslate Zircon Ore",
+  "block.myfirstmod.zircon_lamp": "Zircon Lamp",
+  "block.myfirstmod.blueberry_crop": "Blueberry Crop"
+
+}

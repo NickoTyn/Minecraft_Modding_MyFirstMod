@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " / ",
+    "/#/",
+    " / "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_block"
+    },
+    "/": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "myfirstmod:eight_ball"
+  }
+}

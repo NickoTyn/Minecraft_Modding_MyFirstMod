@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " / ",
+    "/#/",
+    " / "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "/": {
+      "item": "myfirstmod:zircon"
+    }
+  },
+  "result": {
+    "item": "myfirstmod:zircon_lamp",
+    "count": 4
+  }
+}

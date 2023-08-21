@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "myfirstmod:zircon_ore",
+    "myfirstmod:zircon_block",
+    "myfirstmod:zircon_lamp"
+
+    //"myfirstmod:deepslate_zircon_ore"
+  ]
+}
