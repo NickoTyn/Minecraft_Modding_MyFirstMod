@@ -1,0 +1,11 @@
+{
+  "type": "myfirstmod:gem_infusing",
+  "ingredients": [
+    {
+      "item": "myfirstmod:raw_zircon"
+    }
+  ],
+  "output": {
+    "item": "myfirstmod:zircon"
+  }
+}

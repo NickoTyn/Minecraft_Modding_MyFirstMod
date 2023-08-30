@@ -22,6 +22,18 @@ public class ModPlacedFeatures {
                     commonOrePlacement(2, //VeinsPerChunk
                         HeightRangePlacement.triangle(VerticalAnchor.absolute(-80),VerticalAnchor.absolute(80)))));
 
+    public static final RegistryObject<PlacedFeature> AQUAMARINE_ORE_PLACED = PLACED_FEATURES.register("aquamarine_ore_placed",
+            () -> new PlacedFeature(ModConfiguredFeatures.AQUAMARINE_ORE.getHolder().get(),
+                    commonOrePlacement(2, //VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.absolute(-80),VerticalAnchor.absolute(80)))));
+
+
+    public static final RegistryObject<PlacedFeature> ZIRCON_GEODE_PLACED = PLACED_FEATURES.register("zircon_geode_placed",
+            () -> new PlacedFeature(ModConfiguredFeatures.ZIRCON_GEODE.getHolder().get(), List.of(
+                    RarityFilter.onAverageOnceEvery(50), InSquarePlacement.spread(),
+                    HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(-55), VerticalAnchor.absolute(0)),
+                    BiomeFilter.biome())));
+
 
 
     public static List<PlacementModifier> orePlacement(PlacementModifier placementModifier, PlacementModifier placementModifier1) {

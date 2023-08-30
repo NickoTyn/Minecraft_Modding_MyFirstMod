@@ -2,9 +2,11 @@
   "replace": false,
   "values": [
     "myfirstmod:zircon_ore",
+    "myfirstmod:deepslate_zircon_ore",
     "myfirstmod:zircon_block",
-    "myfirstmod:zircon_lamp"
+    "myfirstmod:zircon_lamp",
+    "myfirstmod:aquamarine_ore",
+    "myfirstmod:deepslate_aquamarine_ore"
 
-    //"myfirstmod:deepslate_zircon_ore"
   ]
 }

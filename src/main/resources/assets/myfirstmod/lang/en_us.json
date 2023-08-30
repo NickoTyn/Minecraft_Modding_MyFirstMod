@@ -9,7 +9,13 @@
   "item.myfirstmod.blueberry_seeds": "Blueberry Seeds",
   "item.myfirstmod.blueberry": "Blueberry",
 
+  "item.myfirstmod.zircon_sword": "Zircon Sword",
 
+  "item.myfirstmod.aquamarine": "Aquamarine",
+  "item.myfirstmod.raw_aquamarine": "Raw Aquamarine",
+  "block.myfirstmod.aquamarine_ore": "Aquamarine Ore",
+  "block.myfirstmod.deepslate_aquamarine_ore": "Deepslate Aquamarine Ore",
+  "block.myfirstmod.aquamarine_block": "Aquamarine BLock",
 
   "itemGroup.myfirstmodtab": "My First Mod TAB",
   "entity.minecraft.villager.myfirstmod.lamp_master":  "Lamp Master",
@@ -19,6 +25,9 @@
   "block.myfirstmod.zircon_ore": "Zircon Ore",
   "block.myfirstmod.deepslate_zircon_ore": "Deepslate Zircon Ore",
   "block.myfirstmod.zircon_lamp": "Zircon Lamp",
-  "block.myfirstmod.blueberry_crop": "Blueberry Crop"
+  "block.myfirstmod.blueberry_crop": "Blueberry Crop",
+
+  "block.myfirstmod.tool_forge": "Tool Forge",
+  "block.myfirstmod.gem_infusing_station": "Gem Infusing Station"
 
 }

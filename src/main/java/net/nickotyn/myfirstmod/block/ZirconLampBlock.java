@@ -1,4 +1,4 @@
-package net.nickotyn.myfirstmod.item.custom;
+package net.nickotyn.myfirstmod.block;
 
 import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.core.BlockPos;

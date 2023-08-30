@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,7 +17,6 @@ import net.nickotyn.myfirstmod.MyFirstMod;
 import net.nickotyn.myfirstmod.item.ModCreativeModeTab;
 import net.nickotyn.myfirstmod.item.ModItems;
 import net.nickotyn.myfirstmod.item.custom.BlueBerryCropBlock;
-import net.nickotyn.myfirstmod.item.custom.ZirconLampBlock;
 
 import java.util.function.Supplier;
 
@@ -29,15 +27,32 @@ public class ModBlocks {
     public static final RegistryObject<Block> ZIRCON_BLOCK = registerBlock("zircon_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
+    public static final RegistryObject<Block> AQUAMARINE_BLOCK = registerBlock("aquamarine_block",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.MYFIRSTMOD_TAB);
+
     public static final RegistryObject<Block> ZIRCON_ORE = registerBlock("zircon_ore",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
+
+    public static final RegistryObject<Block> AQUAMARINE_ORE = registerBlock("aquamarine_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
     public static final RegistryObject<Block> DEEPSLATE_ZIRCON_ORE = registerBlock("deepslate_zircon_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
+    public static final RegistryObject<Block> DEEPSLATE_AQUAMARINE_ORE = registerBlock("deepslate_aquamarine_ore",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
+
+
     public static final RegistryObject<Block> ZIRCON_LAMP = registerBlock("zircon_lamp",
             () -> new ZirconLampBlock(BlockBehaviour.Properties.of(Material.ICE).strength(6f).requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(ZirconLampBlock.LIT) ? 15:0)), ModCreativeModeTab.MYFIRSTMOD_TAB);
+
+   /* public static final RegistryObject<Block> TOOL_FORGE = registerBlock("tool_forge",
+            () -> new ToolForgeBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.MYFIRSTMOD_TAB);*/
+
+    public static final RegistryObject<Block> GEM_INFUSING_STATION = registerBlock("gem_infusing_station",
+            () -> new GemInfusingStationBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
     public static final RegistryObject<Block> BLUEBERRY_CROP = BLOCKS.register("blueberry_crop",
             () -> new BlueBerryCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)));

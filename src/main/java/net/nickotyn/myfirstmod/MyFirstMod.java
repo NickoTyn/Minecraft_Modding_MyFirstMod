@@ -2,6 +2,7 @@ package net.nickotyn.myfirstmod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Blocks;
@@ -16,7 +17,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nickotyn.myfirstmod.block.ModBlocks;
+import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import net.nickotyn.myfirstmod.item.ModItems;
+import net.nickotyn.myfirstmod.recipe.ModRecipes;
+import net.nickotyn.myfirstmod.screen.GemInfusingStationScreen;
+import net.nickotyn.myfirstmod.screen.ModMenuTypes;
+//import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
+//import net.nickotyn.myfirstmod.screen.ToolForgeScreen;
 import net.nickotyn.myfirstmod.villager.ModVillagers;
 import net.nickotyn.myfirstmod.world.feature.ModConfiguredFeatures;
 import net.nickotyn.myfirstmod.world.feature.ModPlacedFeatures;
@@ -40,7 +47,13 @@ public class MyFirstMod {
     ModConfiguredFeatures.register(modEventBus);
     ModPlacedFeatures.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+
+        ModRecipes.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -55,19 +68,16 @@ public class MyFirstMod {
 
     }
 
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-
-        LOGGER.info("HELLO from server starting");
-    }
-
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents{
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
+            // MenuScreens.register(ModMenuTypes.TOOL_FORGE_MENU.get(), ToolForgeScreen::new);
+            MenuScreens.register(ModMenuTypes.GEM_INFUSING_STATION_MENU.get(), GemInfusingStationScreen::new);
         }
     }
+
+
+
 }
