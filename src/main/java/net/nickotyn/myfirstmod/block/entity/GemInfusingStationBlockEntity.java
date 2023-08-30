@@ -1,5 +1,11 @@
 package net.nickotyn.myfirstmod.block.entity;
 
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.nickotyn.myfirstmod.item.ModItems;
 import net.nickotyn.myfirstmod.recipe.GemInfusingStationRecipe;
 import net.nickotyn.myfirstmod.screen.GemInfusingStationMenu;
@@ -27,6 +33,7 @@ import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.util.Optional;
 
 public class GemInfusingStationBlockEntity extends BlockEntity implements MenuProvider {
@@ -37,7 +44,33 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
     };
 
+
+
+    private final FluidTank FLUID_TANK = new FluidTank(64000){
+        @Override
+        protected void onContentsChanged(){
+            setChanged();
+        }
+        @Override
+        public boolean isFluidValid(FluidStack stack){
+            return stack.getFluid() == Fluids.LAVA;
+        }
+
+    };
+
+    public void setFluid(FluidStack stack){
+        this.FLUID_TANK.setFluid((stack));
+
+    }
+
+    public FluidStack getFluidStack(){
+        return this.FLUID_TANK.getFluid();
+    }
+
+
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
 
     protected final ContainerData data;
     private int progress = 0;
@@ -87,6 +120,10 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
             return lazyItemHandler.cast();
         }
 
+        if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+            return lazyFluidHandler.cast();
+        }
+
         return super.getCapability(cap, side);
     }
 
@@ -94,18 +131,21 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     public void onLoad() {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyFluidHandler = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyItemHandler.invalidate();
+        lazyFluidHandler.invalidate();
     }
 
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("gem_infusing_station.progress", this.progress);
+        nbt = FLUID_TANK.writeToNBT(nbt);
 
         super.saveAdditional(nbt);
     }
@@ -115,6 +155,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         progress = nbt.getInt("gem_infusing_station.progress");
+        FLUID_TANK.readFromNBT(nbt);
     }
 
     public void drops() {
@@ -175,7 +216,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
     }
 
-    private static boolean hasRecipe(GemInfusingStationBlockEntity entity) {
+    private static boolean hasRecipe(@NotNull GemInfusingStationBlockEntity entity) {
         Level level = entity.level;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
@@ -185,10 +226,12 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
         Optional<GemInfusingStationRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
-        boolean hasSpace = canInsertAmountIntoOutputSlot(inventory);
-        boolean acceptsOutput = canInsertItemIntoOutputSlot(inventory,recipe.get().getResultItem());
-        boolean result = recipe.isPresent() && hasSpace && acceptsOutput;
-        return result;
+//        boolean hasSpace = canInsertAmountIntoOutputSlot(inventory);
+//        boolean acceptsOutput = canInsertItemIntoOutputSlot(inventory,recipe.get().getResultItem());
+//        boolean result = recipe.isPresent() && hasSpace && acceptsOutput;
+
+        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
+                canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem());
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
