@@ -3,6 +3,9 @@
   "ingredients": [
     {
       "item": "myfirstmod:raw_zircon"
+    },
+    {
+      "item": "myfirstmod:aquamarine"
     }
   ],
   "output": {

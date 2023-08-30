@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class GemInfusingStationBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -160,11 +160,18 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
                 .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
 
         if(hasRecipe(pEntity)) {
-            pEntity.itemHandler.extractItem(1, 1, false);
-            pEntity.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem().getItem(),
-                    pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
+            ItemStack inputStack1 = pEntity.itemHandler.extractItem(1, 1, false);
+            ItemStack inputStack2 = pEntity.itemHandler.extractItem(2, 1, false);
 
-            pEntity.resetProgress();
+            if (!inputStack1.isEmpty() && !inputStack2.isEmpty()) {
+
+//                pEntity.itemHandler.extractItem(1, 1, false);
+//                pEntity.itemHandler.extractItem(2, 1, false);
+                pEntity.itemHandler.setStackInSlot(3, new ItemStack(recipe.get().getResultItem().getItem(),
+                        pEntity.itemHandler.getStackInSlot(3).getCount() + 1));
+
+                pEntity.resetProgress();
+            }
         }
     }
 
@@ -173,17 +180,19 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
+            System.out.println("item " + i + "registered");//DE STERS
         }
 
         Optional<GemInfusingStationRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
-
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
-                canInsertItemIntoOutputSlot(inventory,recipe.get().getResultItem());
+        boolean hasSpace = canInsertAmountIntoOutputSlot(inventory);
+        boolean acceptsOutput = canInsertItemIntoOutputSlot(inventory,recipe.get().getResultItem());
+        boolean result = recipe.isPresent() && hasSpace && acceptsOutput;
+        return result;
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
-        return inventory.getItem(2).getItem() == stack.getItem() || inventory.getItem(2).isEmpty();
+        return inventory.getItem(3).getItem() == stack.getItem() || inventory.getItem(3).isEmpty();
     }
 
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {

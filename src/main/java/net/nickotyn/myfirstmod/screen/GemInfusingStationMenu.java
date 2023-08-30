@@ -24,7 +24,7 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
 
     public GemInfusingStationMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.GEM_INFUSING_STATION_MENU.get(), id);
-        checkContainerSize(inv, 3);
+        checkContainerSize(inv, 5);
         blockEntity = (GemInfusingStationBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
@@ -34,10 +34,10 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 12+10, 15+16));
-            this.addSlot(new SlotItemHandler(handler, 1, 86+5, 15));
-           // this.addSlot(new SlotItemHandler(handler, 2, 86+5+5, 15));
-            this.addSlot(new SlotItemHandler(handler, 2, 86+17, 60+1));
-           // this.addSlot(new SlotItemHandler(handler, 4, 148, 35));
+            this.addSlot(new SlotItemHandler(handler, 1, 91, 15));
+            this.addSlot(new SlotItemHandler(handler, 2, 91+7+16, 15)); // might be index 3
+            this.addSlot(new SlotItemHandler(handler, 3, 86+17, 60+1)); // might be index 2
+            this.addSlot(new SlotItemHandler(handler, 4, 149, 37));
         });
 
         addDataSlots(data);

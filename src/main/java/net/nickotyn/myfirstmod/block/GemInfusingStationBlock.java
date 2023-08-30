@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GemInfusingStationBlock extends BaseEntityBlock {
@@ -100,7 +101,7 @@ public class GemInfusingStationBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, BlockState state,
                                                                   BlockEntityType<T> type) {
         return createTickerHelper(type, ModBlockEntities.GEM_INFUSING_STATION.get(),
                 GemInfusingStationBlockEntity::tick);
