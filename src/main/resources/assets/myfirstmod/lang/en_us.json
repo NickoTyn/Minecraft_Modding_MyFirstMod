@@ -28,6 +28,10 @@
   "block.myfirstmod.blueberry_crop": "Blueberry Crop",
 
   "block.myfirstmod.tool_forge": "Tool Forge",
-  "block.myfirstmod.gem_infusing_station": "Gem Infusing Station"
+  "block.myfirstmod.gem_infusing_station": "Gem Infusing Station",
+
+  "myfirstmod.tooltip.liquid.amount.with.capacity": "%s / &s mB",
+  "myfirsmod.tooltip.liquid.amount": "%s mB"
+
 
 }

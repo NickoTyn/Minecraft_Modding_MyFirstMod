@@ -1,5 +1,8 @@
 package net.nickotyn.myfirstmod.screen;
 
+import net.minecraft.commands.arguments.coordinates.Coordinates;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 import net.nickotyn.myfirstmod.block.ModBlocks;
 import net.nickotyn.myfirstmod.block.entity.GemInfusingStationBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,7 +12,6 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +19,8 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
     public final GemInfusingStationBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+
+    private FluidStack fluidStack;
 
     public GemInfusingStationMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
@@ -28,11 +32,12 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
         blockEntity = (GemInfusingStationBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
+        this.fluidStack = blockEntity.getFluidStack();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 12+10, 15+16));
             this.addSlot(new SlotItemHandler(handler, 1, 91, 15));
             this.addSlot(new SlotItemHandler(handler, 2, 91+7+16, 15)); // might be index 3
@@ -47,6 +52,13 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
         return data.get(0) > 0;
     }
 
+    public void setFluid(FluidStack fluidStack) {
+        this.fluidStack = fluidStack;
+    }
+
+    public FluidStack getFluidStack(){
+        return fluidStack;
+    }
     public int getScaledProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress
@@ -125,5 +137,10 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
         }
+    }
+
+
+    public GemInfusingStationBlockEntity getBlockEntity() {
+        return this.blockEntity;
     }
 }
