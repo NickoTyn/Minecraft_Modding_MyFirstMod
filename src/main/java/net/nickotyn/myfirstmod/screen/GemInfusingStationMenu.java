@@ -40,8 +40,8 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 12+10, 15+16));
             this.addSlot(new SlotItemHandler(handler, 1, 91, 15));
-            this.addSlot(new SlotItemHandler(handler, 2, 91+7+16, 15)); // might be index 3
-            this.addSlot(new SlotItemHandler(handler, 3, 86+17, 60+1)); // might be index 2
+            this.addSlot(new SlotItemHandler(handler, 2, 91+7+16, 15));
+            this.addSlot(new SlotItemHandler(handler, 3, 86+17, 60+1));
             this.addSlot(new SlotItemHandler(handler, 4, 149, 37));
         });
 

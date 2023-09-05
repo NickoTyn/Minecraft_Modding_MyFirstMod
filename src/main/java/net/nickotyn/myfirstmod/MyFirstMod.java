@@ -19,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.nickotyn.myfirstmod.block.ModBlocks;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import net.nickotyn.myfirstmod.item.ModItems;
+import net.nickotyn.myfirstmod.networking.ModMessages;
 import net.nickotyn.myfirstmod.recipe.ModRecipes;
 import net.nickotyn.myfirstmod.screen.GemInfusingStationScreen;
 import net.nickotyn.myfirstmod.screen.ModMenuTypes;
@@ -63,6 +64,7 @@ public class MyFirstMod {
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         event.enqueueWork(() -> {
+            ModMessages.register();
             ModVillagers.registerPOIs();
     });
 

@@ -60,7 +60,7 @@ public class GemInfusingStationScreen extends AbstractContainerScreen<GemInfusin
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
 
         renderProgressArrow(pPoseStack, x, y);
-        renderer.render(pPoseStack, x + 55,y + 15, menu.getFluidStack());
+        renderer.render(pPoseStack, x + 65,y + 15, menu.getFluidStack());
     }
 
     private void renderProgressArrow(PoseStack pPoseStack, int x, int y) {

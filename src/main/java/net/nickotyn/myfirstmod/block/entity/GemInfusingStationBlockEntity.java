@@ -8,6 +8,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.nickotyn.myfirstmod.item.ModItems;
+import net.nickotyn.myfirstmod.networking.ModMessages;
+import net.nickotyn.myfirstmod.networking.packet.FluidSyncS2CPacket;
 import net.nickotyn.myfirstmod.recipe.GemInfusingStationRecipe;
 import net.nickotyn.myfirstmod.screen.GemInfusingStationMenu;
 import net.minecraft.core.BlockPos;
@@ -47,8 +49,8 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
                 case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
-                case 1 -> true;
-                case 2 -> false;
+                case 1, 2, 4 -> true;
+                case 3 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
@@ -60,10 +62,14 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         @Override
         protected void onContentsChanged(){
             setChanged();
+            if (!level.isClientSide()) {
+                ModMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
+            }
         }
         @Override
         public boolean isFluidValid(FluidStack stack){
             return stack.getFluid() == Fluids.LAVA;
+
         }
 
     };
@@ -183,7 +189,6 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
 
         if(hasRecipe(pEntity) && hasEnoughFluid(pEntity)) {
-            pEntity.FLUID_TANK.drain(100, IFluidHandler.FluidAction.EXECUTE);
             pEntity.progress++;
             setChanged(level, pos, state);
 
@@ -202,16 +207,18 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     }
 
     private static boolean hasEnoughFluid(GemInfusingStationBlockEntity pEntity) {
-        return pEntity.FLUID_TANK.getFluidAmount() >= 100;
+        return pEntity.FLUID_TANK.getFluidAmount() >= 500;
     }
 
     private static void transferItemFluidToFluidTank(GemInfusingStationBlockEntity pEntity) {
         pEntity.itemHandler.getStackInSlot(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+
             int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1000);
 
         FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
         if(pEntity.FLUID_TANK.isFluidValid(stack)){
             stack = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+
             fillTankWithFluid(pEntity, stack, handler.getContainer());
 
         }
@@ -237,7 +244,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     }
 
     private static void craftItem(GemInfusingStationBlockEntity pEntity) {
-
+        pEntity.FLUID_TANK.drain(500, IFluidHandler.FluidAction.EXECUTE);
         Level level = pEntity.level;
         SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
         for (int i = 0; i < pEntity.itemHandler.getSlots(); i++) {
@@ -248,6 +255,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
                 .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
 
         if(hasRecipe(pEntity)) {
+
             ItemStack inputStack1 = pEntity.itemHandler.extractItem(1, 1, false);
             ItemStack inputStack2 = pEntity.itemHandler.extractItem(2, 1, false);
 
