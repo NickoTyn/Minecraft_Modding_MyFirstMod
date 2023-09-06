@@ -1,6 +1,8 @@
 package net.nickotyn.myfirstmod.block.entity;
 
 import com.sun.jna.platform.win32.OaIdl;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -56,9 +58,16 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
     };
 
+    private static Level staticLevel;
+    private static BlockPos staticBlockPos;
+
+    private static void setContext(Level level, BlockPos blockPos) {
+        staticLevel = level;
+        staticBlockPos = blockPos;
+    }
 
 
-    private final FluidTank FLUID_TANK = new FluidTank(64000){
+    private final FluidTank FLUID_TANK = new FluidTank(30000){
         @Override
         protected void onContentsChanged(){
             setChanged();
@@ -90,7 +99,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 78;
+    private int maxProgress = 780;
 
     public GemInfusingStationBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.GEM_INFUSING_STATION.get(), pos, state);
@@ -194,6 +203,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
             if(pEntity.progress >= pEntity.maxProgress) {
                 craftItem(pEntity);
+
             }
         } else {
             pEntity.resetProgress();
@@ -201,7 +211,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
 
         if(hasFluidItemInSourceSlot(pEntity)){
-            transferItemFluidToFluidTank(pEntity);
+            transferItemFluidToFluidTank(pEntity, level, pos);
         }
 
     }
@@ -210,16 +220,18 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         return pEntity.FLUID_TANK.getFluidAmount() >= 500;
     }
 
-    private static void transferItemFluidToFluidTank(GemInfusingStationBlockEntity pEntity) {
+    private static void transferItemFluidToFluidTank(GemInfusingStationBlockEntity pEntity, Level level, BlockPos pos) {
         pEntity.itemHandler.getStackInSlot(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
 
-            int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1000);
+            int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1500);
 
         FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
         if(pEntity.FLUID_TANK.isFluidValid(stack)){
             stack = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
 
+            setContext(staticLevel, staticBlockPos);
             fillTankWithFluid(pEntity, stack, handler.getContainer());
+            level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUCKET_FILL_LAVA, SoundSource.PLAYERS, 1.0f, 1.0f);
 
         }
 
@@ -291,6 +303,6 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     }
 
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
-        return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
+        return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
     }
 }

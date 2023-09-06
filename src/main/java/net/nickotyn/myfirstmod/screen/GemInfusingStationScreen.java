@@ -39,11 +39,11 @@ public class GemInfusingStationScreen extends AbstractContainerScreen<GemInfusin
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         
-        renderFluidAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+       // renderFluidAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
     private void renderFluidAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 55, 15)) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 15, 5)) {
             renderTooltip(pPoseStack, renderer.getTooltip(menu.getFluidStack(), TooltipFlag.Default.NORMAL),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }

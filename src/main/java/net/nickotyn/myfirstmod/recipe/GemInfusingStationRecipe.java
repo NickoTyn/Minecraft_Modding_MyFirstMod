@@ -31,7 +31,6 @@ public class GemInfusingStationRecipe implements Recipe<SimpleContainer> {
             return false;
         }
 
-        /// TODO add the second slot for recepie
         ItemStack inputStack1 = pContainer.getItem(1);
         ItemStack inputStack2 = pContainer.getItem(2);
 
