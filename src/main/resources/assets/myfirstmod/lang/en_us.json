@@ -17,6 +17,10 @@
   "block.myfirstmod.deepslate_aquamarine_ore": "Deepslate Aquamarine Ore",
   "block.myfirstmod.aquamarine_block": "Aquamarine BLock",
 
+  "block.myfirstmod.peridot": "Peridot",
+  "block.myfirstmod.netherrack_peridot_ore": "Peridot Ore",
+
+
   "itemGroup.myfirstmodtab": "My First Mod TAB",
   "entity.minecraft.villager.myfirstmod.lamp_master":  "Lamp Master",
 

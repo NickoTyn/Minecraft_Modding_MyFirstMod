@@ -25,8 +25,8 @@ public class ModItems {
     public static final RegistryObject<Item> RAW_ZIRCON = ITEMS.register("raw_zircon", ()
             -> new Item(new Item.Properties().tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
-    /*public static final RegistryObject<Item> RAW_AQUAMARINE = ITEMS.register("raw_aquamarine", ()
-            -> new Item(new Item.Properties().tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));*/
+    public static final RegistryObject<Item> PERIDOT = ITEMS.register("peridot", ()
+            -> new Item(new Item.Properties().fireResistant().tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> EIGHT_BALL = ITEMS.register("eight_ball", ()
             -> new EightBallItem(new Item.Properties().tab(ModCreativeModeTab.MYFIRSTMOD_TAB).stacksTo(1)));
