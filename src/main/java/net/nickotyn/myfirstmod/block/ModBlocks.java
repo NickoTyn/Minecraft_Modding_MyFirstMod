@@ -36,6 +36,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> AQUAMARINE_ORE = registerBlock("aquamarine_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
+    public static final RegistryObject<Block> PERIDOT_BLOCK = registerBlock("peridot_block",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops()), ModCreativeModeTab.MYFIRSTMOD_TAB);
+
     public static final RegistryObject<Block> NETHERRACK_PERIDOT_ORE = registerBlock("netherrack_peridot_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6f).requiresCorrectToolForDrops(),UniformInt.of(2,7)), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
