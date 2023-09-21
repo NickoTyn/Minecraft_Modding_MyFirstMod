@@ -1,4 +1,4 @@
-/*package net.nickotyn.myfirstmod.block;
+package net.nickotyn.myfirstmod.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,8 +16,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
+import net.nickotyn.myfirstmod.block.entity.GemInfusingStationBlockEntity;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import net.nickotyn.myfirstmod.block.entity.ToolForgeEntity;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ToolForgeBlock extends BaseEntityBlock {
@@ -27,9 +29,6 @@ public class ToolForgeBlock extends BaseEntityBlock {
     protected ToolForgeBlock(Properties properties) {
         super(properties);
     }
-
-
-
 
 
     @Override
@@ -47,9 +46,10 @@ public class ToolForgeBlock extends BaseEntityBlock {
         builder.add(FACING);
     }
 
+
     /*BLOCK ENTITY*/
 
-    /*
+
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
@@ -86,8 +86,9 @@ public class ToolForgeBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, BlockState state,
+                                                                  BlockEntityType<T> type) {
         return createTickerHelper(type, ModBlockEntities.TOOL_FORGE.get(),
                 ToolForgeEntity::tick);
     }
-}*/
+}

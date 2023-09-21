@@ -25,6 +25,8 @@ import net.nickotyn.myfirstmod.screen.GemInfusingStationScreen;
 import net.nickotyn.myfirstmod.screen.ModMenuTypes;
 //import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
 //import net.nickotyn.myfirstmod.screen.ToolForgeScreen;
+import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
+import net.nickotyn.myfirstmod.screen.ToolForgeScreen;
 import net.nickotyn.myfirstmod.villager.ModVillagers;
 import net.nickotyn.myfirstmod.world.feature.ModConfiguredFeatures;
 import net.nickotyn.myfirstmod.world.feature.ModPlacedFeatures;
@@ -75,8 +77,8 @@ public class MyFirstMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
-            // MenuScreens.register(ModMenuTypes.TOOL_FORGE_MENU.get(), ToolForgeScreen::new);
             MenuScreens.register(ModMenuTypes.GEM_INFUSING_STATION_MENU.get(), GemInfusingStationScreen::new);
+            MenuScreens.register(ModMenuTypes.TOOL_FORGE_MENU.get(), ToolForgeScreen::new);
         }
     }
 

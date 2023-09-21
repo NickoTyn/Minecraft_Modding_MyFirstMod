@@ -1,7 +1,7 @@
-/*package net.nickotyn.myfirstmod.block.entity;
+package net.nickotyn.myfirstmod.block.entity;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.nickotyn.myfirstmod.item.ModItems;
-import net.nickotyn.myfirstmod.screen.GemInfusingStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,10 +19,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
+import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -73,19 +73,19 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
 
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return Component.literal("Tool Forge");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
         return new ToolForgeMenu(id,inventory,this,this.data);
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
         }
         return super.getCapability(cap,side);
@@ -187,4 +187,4 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
 
 
 
-}*/
+}

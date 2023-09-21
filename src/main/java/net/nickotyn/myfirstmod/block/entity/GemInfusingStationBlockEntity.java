@@ -4,6 +4,7 @@ import com.sun.jna.platform.win32.OaIdl;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.item.AirItem;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,6 +13,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.nickotyn.myfirstmod.item.ModItems;
 import net.nickotyn.myfirstmod.networking.ModMessages;
 import net.nickotyn.myfirstmod.networking.packet.FluidSyncS2CPacket;
+import net.nickotyn.myfirstmod.networking.packet.ItemStackSyncS2CPacket;
 import net.nickotyn.myfirstmod.recipe.GemInfusingStationRecipe;
 import net.nickotyn.myfirstmod.screen.GemInfusingStationMenu;
 import net.minecraft.core.BlockPos;
@@ -45,6 +47,9 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
+            if(!level.isClientSide()){
+                ModMessages.sendToClients((new ItemStackSyncS2CPacket(this,worldPosition)));
+            }
         }
 
         @Override
@@ -92,7 +97,23 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         return this.FLUID_TANK.getFluid();
     }
 
+    public ItemStack getRenderStack() {
+        ItemStack stack;
 
+        if(!itemHandler.getStackInSlot(4).isEmpty()){
+            stack = itemHandler.getStackInSlot(4);
+        }else {
+            return ItemStack.EMPTY;
+        }
+
+        return  stack;
+    }
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++){
+            itemHandler.setStackInSlot(i,itemStackHandler.getStackInSlot(i));
+        }
+    }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
@@ -243,8 +264,6 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
         pEntity.itemHandler.extractItem(0,1,false);
         pEntity.itemHandler. insertItem(0, container, false);
-
-        ///TODO add a sound when adding lava/extracting
     }
 
     private static boolean hasFluidItemInSourceSlot(GemInfusingStationBlockEntity pEntity) {
@@ -305,4 +324,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
         return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
     }
+
+
+
 }

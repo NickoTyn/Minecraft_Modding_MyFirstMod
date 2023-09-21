@@ -15,8 +15,8 @@ public class ModMenuTypes {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, MyFirstMod.MOD_ID);
 
 
-   /*public static final RegistryObject<MenuType<ToolForgeMenu>> TOOL_FORGE_MENU =
-            registerMenuType(ToolForgeMenu::new, "tool_forge_menu");*/
+   public static final RegistryObject<MenuType<ToolForgeMenu>> TOOL_FORGE_MENU =
+            registerMenuType(ToolForgeMenu::new, "tool_forge_menu");
 
     public static final RegistryObject<MenuType<GemInfusingStationMenu>> GEM_INFUSING_STATION_MENU =
             registerMenuType(GemInfusingStationMenu::new, "gem_infusing_station_menu");

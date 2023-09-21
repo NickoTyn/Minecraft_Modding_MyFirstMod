@@ -139,8 +139,8 @@ public class GemInfusingStationMenu extends AbstractContainerMenu {
         }
     }
 
-
     public GemInfusingStationBlockEntity getBlockEntity() {
         return this.blockEntity;
     }
+
 }

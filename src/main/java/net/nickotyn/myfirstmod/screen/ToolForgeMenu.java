@@ -1,5 +1,6 @@
-/*package net.nickotyn.myfirstmod.screen;
+package net.nickotyn.myfirstmod.screen;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.nickotyn.myfirstmod.block.ModBlocks;
 import net.nickotyn.myfirstmod.block.entity.GemInfusingStationBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,37 +10,38 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.nickotyn.myfirstmod.block.entity.ToolForgeEntity;
 import org.jetbrains.annotations.NotNull;
 public class ToolForgeMenu extends AbstractContainerMenu {
 
     public ToolForgeEntity blockEntity;
-    private Level level;
-    private ContainerData data;
+    private final Level level;
+    private final ContainerData data;
 
     public ToolForgeMenu(int id, Inventory inv, FriendlyByteBuf extraData){
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
     }
 
-   public ToolForgeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data){
-        super(ModMenuTypes.TOOL_FORGE_MENU.get(),id);
+    public ToolForgeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.TOOL_FORGE_MENU.get(), id);
         checkContainerSize(inv, 3);
         blockEntity = (ToolForgeEntity) entity;
         this.level = inv.player.level;
-        this.data = data;
+
+        this.data = data; // Assign the ContainerData directly
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
             this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
             this.addSlot(new SlotItemHandler(handler, 1, 86, 15));
             this.addSlot(new SlotItemHandler(handler, 2, 86, 60));
         });
 
-        addDataSlot((DataSlot) data);
-   }
+        addDataSlots(data);
+    }
 
 
     public boolean isCrafting() {
@@ -75,7 +77,7 @@ public class ToolForgeMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_SLOT_COUNT = 3;  // MUST be the number of slots you have!
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public @NotNull ItemStack quickMoveStack(Player playerIn, int index) {
         Slot sourceSlot = slots.get(index);
         if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
         ItemStack sourceStack = sourceSlot.getItem();
@@ -129,4 +131,8 @@ public class ToolForgeMenu extends AbstractContainerMenu {
         }
     }
 
-}*/
+    public ToolForgeEntity getBlockEntity() {
+        return this.blockEntity;
+    }
+
+}

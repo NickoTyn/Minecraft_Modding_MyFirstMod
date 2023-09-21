@@ -31,7 +31,7 @@ public class GemInfusingStationScreen extends AbstractContainerScreen<GemInfusin
     }
 
     private void assignFluidRenderer() {
-        renderer = new FluidTankRenderer(64000, true, 16,61);
+        renderer = new FluidTankRenderer(30000, true, 16,61);
     }
 
     @Override

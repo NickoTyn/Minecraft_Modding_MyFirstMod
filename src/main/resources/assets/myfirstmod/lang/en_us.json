@@ -11,8 +11,17 @@
 
   "item.myfirstmod.zircon_sword": "Zircon Sword",
 
+  "item.myfirstmod.mould_axe": "Axe Mould",
+  "item.myfirstmod.mould_pickaxe": "Pickaxe Mould",
+  "item.myfirstmod.mould_shovel": "Shovel Mould",
+  "item.myfirstmod.mould_sword": "Sword Mould",
+  "item.myfirstmod.mould_swordhandle": "Sword Handle Mould",
+
+
   "item.myfirstmod.aquamarine": "Aquamarine",
   "item.myfirstmod.raw_aquamarine": "Raw Aquamarine",
+
+
   "block.myfirstmod.aquamarine_ore": "Aquamarine Ore",
   "block.myfirstmod.deepslate_aquamarine_ore": "Deepslate Aquamarine Ore",
   "block.myfirstmod.aquamarine_block": "Aquamarine BLock",
@@ -21,21 +30,22 @@
   "block.myfirstmod.netherrack_peridot_ore": "Peridot Ore",
 
 
-  "itemGroup.myfirstmodtab": "My First Mod TAB",
-  "entity.minecraft.villager.myfirstmod.lamp_master":  "Lamp Master",
-
-
   "block.myfirstmod.zircon_block": "Block of Zircon",
   "block.myfirstmod.zircon_ore": "Zircon Ore",
   "block.myfirstmod.deepslate_zircon_ore": "Deepslate Zircon Ore",
   "block.myfirstmod.zircon_lamp": "Zircon Lamp",
   "block.myfirstmod.blueberry_crop": "Blueberry Crop",
 
+
+
+
+
   "block.myfirstmod.tool_forge": "Tool Forge",
   "block.myfirstmod.gem_infusing_station": "Gem Infusing Station",
 
   "myfirstmod.tooltip.liquid.amount.with.capacity": "%s / &s mB",
-  "myfirsmod.tooltip.liquid.amount": "%s mB"
+  "myfirsmod.tooltip.liquid.amount": "%s mB",
 
-
+  "itemGroup.myfirstmodtab": "My First Mod TAB",
+  "entity.minecraft.villager.myfirstmod.lamp_master":  "Lamp Master"
 }

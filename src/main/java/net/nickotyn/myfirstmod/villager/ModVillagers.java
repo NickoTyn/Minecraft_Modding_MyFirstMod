@@ -28,7 +28,8 @@ public class ModVillagers {
             () -> new PoiType(ImmutableSet.copyOf(ModBlocks.ZIRCON_LAMP.get().getStateDefinition().getPossibleStates()),1,1));
 
     public static final RegistryObject<VillagerProfession> LAMP_MASTER = VILLAGER_PROFESSIONS.register("lamp_master",
-            () -> new VillagerProfession("lamp_master", x -> x.get() == ZIRCON_LAMP_POI.get(), x -> x.get() == ZIRCON_LAMP_POI.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_LIBRARIAN));
+            () -> new VillagerProfession("lamp_master", x -> x.get() == ZIRCON_LAMP_POI.get(),
+                    x -> x.get() == ZIRCON_LAMP_POI.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_LIBRARIAN));
 
 
     public static void registerPOIs(){

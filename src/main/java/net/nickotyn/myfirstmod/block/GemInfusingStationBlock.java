@@ -1,5 +1,6 @@
 package net.nickotyn.myfirstmod.block;
 
+import com.mojang.math.Vector3f;
 import net.nickotyn.myfirstmod.block.entity.GemInfusingStationBlockEntity;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -34,6 +35,8 @@ public class GemInfusingStationBlock extends BaseEntityBlock {
 
     private static final VoxelShape SHAPE =
             Block.box(0, 0, 0, 16, 10, 16);
+
+
 
     @Override
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {

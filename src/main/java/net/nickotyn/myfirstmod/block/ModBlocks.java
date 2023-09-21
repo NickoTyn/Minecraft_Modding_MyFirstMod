@@ -50,8 +50,8 @@ public class ModBlocks {
             () -> new ZirconLampBlock(BlockBehaviour.Properties.of(Material.ICE).strength(6f).requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(ZirconLampBlock.LIT) ? 15:0)), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
-   /* public static final RegistryObject<Block> TOOL_FORGE = registerBlock("tool_forge",
-            () -> new ToolForgeBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.MYFIRSTMOD_TAB);*/
+    public static final RegistryObject<Block> TOOL_FORGE = registerBlock("tool_forge",
+            () -> new ToolForgeBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.MYFIRSTMOD_TAB);
 
     public static final RegistryObject<Block> GEM_INFUSING_STATION = registerBlock("gem_infusing_station",
             () -> new GemInfusingStationBlock(BlockBehaviour.Properties.of(Material.METAL)

@@ -42,6 +42,21 @@ public class ModItems {
             -> new MySwordItem(CustomSwordMaterials.ZIRCON, 0, -2,
             new Item.Properties().tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
+    public static final RegistryObject<Item> MOULD_AXE = ITEMS.register("mould_axe", ()
+            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+
+    public static final RegistryObject<Item> MOULD_PICKAXE = ITEMS.register("mould_pickaxe", ()
+            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+
+    public static final RegistryObject<Item> MOULD_SHOVEL = ITEMS.register("mould_shovel", ()
+            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+
+    public static final RegistryObject<Item> MOULD_SWORD = ITEMS.register("mould_sword", ()
+            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+
+    public static final RegistryObject<Item> MOULD_SWORDHANDLE = ITEMS.register("mould_swordhandle", ()
+            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+
     public static void register(IEventBus eventbus){
         ITEMS.register(eventbus);
     }
