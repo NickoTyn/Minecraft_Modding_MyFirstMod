@@ -12,7 +12,7 @@ import net.nickotyn.myfirstmod.MyFirstMod;
 public class ToolForgeScreen extends AbstractContainerScreen<ToolForgeMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(MyFirstMod.MOD_ID,"textures/gui/gem_infusing_station_gui.png");
+            new ResourceLocation(MyFirstMod.MOD_ID,"textures/gui/tool_forge_gui.png");
 
     public ToolForgeScreen(ToolForgeMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);

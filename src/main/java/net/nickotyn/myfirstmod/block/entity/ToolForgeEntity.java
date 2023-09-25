@@ -22,6 +22,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
+import net.nickotyn.myfirstmod.networking.ModMessages;
+import net.nickotyn.myfirstmod.networking.packet.ItemStackSyncS2CPacket;
 import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,18 +31,44 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class ToolForgeEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3){
+    private final ItemStackHandler itemHandler = new ItemStackHandler(7){
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
+            if(!level.isClientSide()){
+                ModMessages.sendToClients(new ItemStackSyncS2CPacket(this,worldPosition));
+            }
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> true; // needs to be added a tag for the tools
+                case 1, 2, 4, 5 -> true;
+                case 6 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
         }
     };
 
+
+    public ItemStack getRenderStack() {
+        ItemStack stack;
+
+        if(!itemHandler.getStackInSlot(5).isEmpty()){
+            stack = itemHandler.getStackInSlot(4);
+        }else if(!itemHandler.getStackInSlot(0).isEmpty()) {
+            stack = itemHandler.getStackInSlot(0);
+        }else  return ItemStack.EMPTY;
+
+
+        return  stack;
+    }
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     private final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 78;
+    private int maxProgress = 1;
 
 
     public ToolForgeEntity( BlockPos pos, BlockState state) {
