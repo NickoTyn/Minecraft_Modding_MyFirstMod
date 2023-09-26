@@ -22,6 +22,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
+import net.nickotyn.myfirstmod.networking.ModMessages;
+import net.nickotyn.myfirstmod.networking.packet.ItemStackSyncS2CPacket;
 import net.nickotyn.myfirstmod.screen.ToolForgeMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,20 +35,21 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
+            if(!level.isClientSide()){
+                ModMessages.sendToClients(new ItemStackSyncS2CPacket(this,worldPosition));
+            }
         }
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
-                case 1, 2, 4 -> true;
-                case 3 -> false;
+                case 0 -> true; // needs to be added a tag for the tools
+                case 1, 2, 4, 5 -> true;
+                case 6 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
-
-
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 

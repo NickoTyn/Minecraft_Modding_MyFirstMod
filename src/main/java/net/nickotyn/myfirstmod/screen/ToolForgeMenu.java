@@ -25,7 +25,7 @@ public class ToolForgeMenu extends AbstractContainerMenu {
 
     public ToolForgeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.TOOL_FORGE_MENU.get(), id);
-        checkContainerSize(inv, 3);
+        checkContainerSize(inv, 7);
         blockEntity = (ToolForgeEntity) entity;
         this.level = inv.player.level;
 
@@ -35,9 +35,13 @@ public class ToolForgeMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
-            this.addSlot(new SlotItemHandler(handler, 1, 86, 15));
-            this.addSlot(new SlotItemHandler(handler, 2, 86, 60));
+            this.addSlot(new SlotItemHandler(handler, 0, 14, 19));
+            this.addSlot(new SlotItemHandler(handler, 1, 60, 67));
+            this.addSlot(new SlotItemHandler(handler, 2, 77, 51));
+            this.addSlot(new SlotItemHandler(handler, 3, 94, 35));
+            this.addSlot(new SlotItemHandler(handler, 4, 111, 19));
+            this.addSlot(new SlotItemHandler(handler, 5, 128, 3));
+            this.addSlot(new SlotItemHandler(handler, 6, 146, 51));
         });
 
         addDataSlots(data);
@@ -74,7 +78,7 @@ public class ToolForgeMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 3;  // MUST be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 7;  // MUST be the number of slots you have!
 
     @Override
     public @NotNull ItemStack quickMoveStack(Player playerIn, int index) {
