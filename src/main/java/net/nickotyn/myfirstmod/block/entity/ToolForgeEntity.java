@@ -34,7 +34,19 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+                case 1, 2, 4 -> true;
+                case 3 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
     };
+
+
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 

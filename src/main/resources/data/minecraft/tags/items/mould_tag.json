@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+  "myfirstmod:mould_pickaxe",
+  "myfirstmod:mould_axe",
+  "myfirstmod:mould_shovel",
+  "myfirstmod:mould_sword",
+  "myfirstmod:mould_swordhandle"
+  ]
+}

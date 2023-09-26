@@ -1,16 +1,25 @@
 package net.nickotyn.myfirstmod.block.entity;
 
-import com.sun.jna.platform.win32.OaIdl;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.item.AirItem;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.*;
+import net.minecraft.world.item.CompassItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.registries.tags.ITag;
+import net.nickotyn.myfirstmod.MyFirstMod;
 import net.nickotyn.myfirstmod.item.ModItems;
+import net.nickotyn.myfirstmod.item.custom.tags.Tags;
 import net.nickotyn.myfirstmod.networking.ModMessages;
 import net.nickotyn.myfirstmod.networking.packet.FluidSyncS2CPacket;
 import net.nickotyn.myfirstmod.networking.packet.ItemStackSyncS2CPacket;
@@ -20,9 +29,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,12 +41,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.nickotyn.myfirstmod.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.plaf.basic.BasicComboBoxUI;
+
 import java.util.Optional;
+
 
 public class GemInfusingStationBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
@@ -52,16 +58,29 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
             }
         }
 
+
+
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+
             return switch (slot) {
                 case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
-                case 1, 2, 4 -> true;
+                case 1, 2 -> true;
                 case 3 -> false;
+                //case 4 -> stack.is(Tags.MOULDS);
+                //case 4 -> stack.getItem() == ModItems.MOULD_AXE.get();
+                case 4 -> CheckMould(stack);
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
+
+    private boolean CheckMould(ItemStack stack){
+        if (stack.is(ModItems.MOULD_AXE.get()) || stack.is(ModItems.MOULD_PICKAXE.get()) || stack.is(ModItems.MOULD_SHOVEL.get()) ||
+               stack.is(ModItems.MOULD_SWORD.get()) || stack.is(ModItems.MOULD_SWORDHANDLE.get())) return true;
+        return false;
+
+    }
 
     private static Level staticLevel;
     private static BlockPos staticBlockPos;
@@ -218,6 +237,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
             return;
         }
 
+
         if(hasRecipe(pEntity) && hasEnoughFluid(pEntity)) {
             pEntity.progress++;
             setChanged(level, pos, state);
@@ -315,6 +335,26 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
                 canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem());
+    }
+
+
+
+
+
+    public boolean onRightClick(Player player) {
+        // Check if the player is sneaking and the main hand is empty
+        if (player.isCrouching() && player.getMainHandItem().isEmpty()) {
+            // Check if the item in the specific slot (e.g., slot 4) is not empty
+            ItemStack slotStack = itemHandler.getStackInSlot(4);
+
+            if (!slotStack.isEmpty()) {
+                // Transfer the item from the slot to the player's main hand
+                player.setItemInHand(InteractionHand.MAIN_HAND, slotStack.copy());
+                itemHandler.setStackInSlot(4, ItemStack.EMPTY); // Clear the slot
+                return true; // Transfer successful
+            }
+        }
+        return false; // Transfer failed
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {

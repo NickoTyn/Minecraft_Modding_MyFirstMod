@@ -1,5 +1,8 @@
 package net.nickotyn.myfirstmod.item;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -43,23 +46,22 @@ public class ModItems {
             new Item.Properties().tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> MOULD_AXE = ITEMS.register("mould_axe", ()
-            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+            -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> MOULD_PICKAXE = ITEMS.register("mould_pickaxe", ()
-            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+            -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> MOULD_SHOVEL = ITEMS.register("mould_shovel", ()
-            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+            -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> MOULD_SWORD = ITEMS.register("mould_sword", ()
-            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+            -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static final RegistryObject<Item> MOULD_SWORDHANDLE = ITEMS.register("mould_swordhandle", ()
-            -> new Item(new Item.Properties().stacksTo(16).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
+            -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.MYFIRSTMOD_TAB)));
 
     public static void register(IEventBus eventbus){
         ITEMS.register(eventbus);
     }
-
 
 }
