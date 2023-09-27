@@ -43,7 +43,7 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> true;// needs to be added a tag for the tools
+                case 0 -> true; // needs to be added a tag for the tools
                 case 1, 2, 4, 5 -> true;
                 case 6 -> false;
                 default -> super.isItemValid(slot, stack);

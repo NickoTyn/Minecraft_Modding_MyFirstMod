@@ -19,9 +19,4 @@ public class ModTags {
         }
     }
 
-
-
-
-   // public static final TagKey<Item> MOULDS = ItemTags.create(new ResourceLocation(MyFirstMod.MOD_ID,"tags/items/mould_tag.json"));
-
 }

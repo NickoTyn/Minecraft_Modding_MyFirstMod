@@ -20,7 +20,7 @@ public class ToolForgeMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ToolForgeMenu(int id, Inventory inv, FriendlyByteBuf extraData){
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(7));
     }
 
     public ToolForgeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {

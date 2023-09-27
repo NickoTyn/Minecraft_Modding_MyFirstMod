@@ -58,19 +58,11 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
                 case 1, 2 -> true;
                 case 3 -> false;
                 case 4 -> stack.is(ModTags.Items.MOULDS);
-                //case 4 -> stack.getItem() == ModItems.MOULD_AXE.get();
-                //case 4 -> CheckMould(stack);
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
 
-    private boolean CheckMould(ItemStack stack){
-        if (stack.is(ModItems.MOULD_AXE.get()) || stack.is(ModItems.MOULD_PICKAXE.get()) || stack.is(ModItems.MOULD_SHOVEL.get()) ||
-               stack.is(ModItems.MOULD_SWORD.get()) || stack.is(ModItems.MOULD_SWORDHANDLE.get())) return true;
-        return false;
-
-    }
 
     private static Level staticLevel;
     private static BlockPos staticBlockPos;
