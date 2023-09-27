@@ -1,25 +1,15 @@
 package net.nickotyn.myfirstmod.block.entity;
 
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.*;
-import net.minecraft.world.item.CompassItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.tags.ITag;
-import net.nickotyn.myfirstmod.MyFirstMod;
 import net.nickotyn.myfirstmod.item.ModItems;
-import net.nickotyn.myfirstmod.item.custom.tags.Tags;
+import net.nickotyn.myfirstmod.item.custom.tags.ModTags;
 import net.nickotyn.myfirstmod.networking.ModMessages;
 import net.nickotyn.myfirstmod.networking.packet.FluidSyncS2CPacket;
 import net.nickotyn.myfirstmod.networking.packet.ItemStackSyncS2CPacket;
@@ -67,9 +57,9 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
                 case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
                 case 1, 2 -> true;
                 case 3 -> false;
-                //case 4 -> stack.is(Tags.MOULDS);
+                case 4 -> stack.is(ModTags.Items.MOULDS);
                 //case 4 -> stack.getItem() == ModItems.MOULD_AXE.get();
-                case 4 -> CheckMould(stack);
+                //case 4 -> CheckMould(stack);
                 default -> super.isItemValid(slot, stack);
             };
         }

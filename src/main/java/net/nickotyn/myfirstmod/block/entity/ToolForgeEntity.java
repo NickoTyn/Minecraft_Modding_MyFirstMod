@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class ToolForgeEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3){
+    private final ItemStackHandler itemHandler = new ItemStackHandler(7){
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -43,13 +43,24 @@ public class ToolForgeEntity extends BlockEntity implements MenuProvider {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> true; // needs to be added a tag for the tools
+                case 0 -> true;// needs to be added a tag for the tools
                 case 1, 2, 4, 5 -> true;
                 case 6 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
+
+    public ItemStack getRenderStack() {
+        ItemStack stack;
+
+        if(!itemHandler.getStackInSlot(6).isEmpty()){
+           return stack = itemHandler.getStackInSlot(6);
+        }else if(!itemHandler.getStackInSlot(0).isEmpty()){
+           return stack = itemHandler.getStackInSlot(0);
+        } else return ItemStack.EMPTY;
+
+    }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
