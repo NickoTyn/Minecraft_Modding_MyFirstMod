@@ -86,7 +86,7 @@ public class GemInfusingStationBlock extends BaseEntityBlock {
                                  Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof GemInfusingStationBlockEntity) {
+            if(entity instanceof GemInfusingStationBlockEntity && !pPlayer.isCrouching()) {
                 NetworkHooks.openScreen(((ServerPlayer)pPlayer), (GemInfusingStationBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");

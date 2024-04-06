@@ -43,11 +43,10 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if(!level.isClientSide()){
-                ModMessages.sendToClients((new ItemStackSyncS2CPacket(this,worldPosition)));
+            if (!level.isClientSide()) {
+                ModMessages.sendToClients((new ItemStackSyncS2CPacket(this, worldPosition)));
             }
         }
-
 
 
         @Override
@@ -73,46 +72,47 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     }
 
 
-    private final FluidTank FLUID_TANK = new FluidTank(30000){
+    private final FluidTank FLUID_TANK = new FluidTank(30000) {
         @Override
-        protected void onContentsChanged(){
+        protected void onContentsChanged() {
             setChanged();
             if (!level.isClientSide()) {
                 ModMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
             }
         }
+
         @Override
-        public boolean isFluidValid(FluidStack stack){
+        public boolean isFluidValid(FluidStack stack) {
             return stack.getFluid() == Fluids.LAVA;
 
         }
 
     };
 
-    public void setFluid(FluidStack stack){
+    public void setFluid(FluidStack stack) {
         this.FLUID_TANK.setFluid((stack));
 
     }
 
-    public FluidStack getFluidStack(){
+    public FluidStack getFluidStack() {
         return this.FLUID_TANK.getFluid();
     }
 
     public ItemStack getRenderStack() {
         ItemStack stack;
 
-        if(!itemHandler.getStackInSlot(4).isEmpty()){
+        if (!itemHandler.getStackInSlot(4).isEmpty()) {
             stack = itemHandler.getStackInSlot(4);
-        }else {
-            return ItemStack.EMPTY;
+        } else {
+            stack = ItemStack.EMPTY;
         }
 
-        return  stack;
+        return stack;
     }
 
     public void setHandler(ItemStackHandler itemStackHandler) {
-        for (int i = 0; i < itemStackHandler.getSlots(); i++){
-            itemHandler.setStackInSlot(i,itemStackHandler.getStackInSlot(i));
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
         }
     }
 
@@ -163,11 +163,11 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
         }
 
-        if(cap == ForgeCapabilities.FLUID_HANDLER){
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
             return lazyFluidHandler.cast();
         }
 
@@ -215,16 +215,22 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, GemInfusingStationBlockEntity pEntity) {
-        if(level.isClientSide()) {
-            return;
+
+
+        ///TODO innefitient it updates the block every tick, it needs to be updated only when the world loades
+        if (!level.isClientSide()) {
+            ModMessages.sendToClients((new ItemStackSyncS2CPacket(pEntity.itemHandler, pEntity.worldPosition)));
+        }
+
+        if (level.isClientSide()) {
         }
 
 
-        if(hasRecipe(pEntity) && hasEnoughFluid(pEntity)) {
+        if (hasRecipe(pEntity) && hasEnoughFluid(pEntity)) {
             pEntity.progress++;
             setChanged(level, pos, state);
 
-            if(pEntity.progress >= pEntity.maxProgress) {
+            if (pEntity.progress >= pEntity.maxProgress) {
                 craftItem(pEntity);
 
             }
@@ -233,7 +239,7 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
             setChanged(level, pos, state);
         }
 
-        if(hasFluidItemInSourceSlot(pEntity)){
+        if (hasFluidItemInSourceSlot(pEntity)) {
             transferItemFluidToFluidTank(pEntity, level, pos);
         }
 
@@ -248,15 +254,15 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
 
             int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1500);
 
-        FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
-        if(pEntity.FLUID_TANK.isFluidValid(stack)){
-            stack = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+            FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
+            if (pEntity.FLUID_TANK.isFluidValid(stack)) {
+                stack = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
 
-            setContext(staticLevel, staticBlockPos);
-            fillTankWithFluid(pEntity, stack, handler.getContainer());
-            level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUCKET_FILL_LAVA, SoundSource.PLAYERS, 1.0f, 1.0f);
+                setContext(staticLevel, staticBlockPos);
+                fillTankWithFluid(pEntity, stack, handler.getContainer());
+                level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUCKET_FILL_LAVA, SoundSource.PLAYERS, 1.0f, 1.0f);
 
-        }
+            }
 
         });
     }
@@ -264,8 +270,8 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     private static void fillTankWithFluid(GemInfusingStationBlockEntity pEntity, FluidStack stack, ItemStack container) {
         pEntity.FLUID_TANK.fill(stack, IFluidHandler.FluidAction.EXECUTE);
 
-        pEntity.itemHandler.extractItem(0,1,false);
-        pEntity.itemHandler. insertItem(0, container, false);
+        pEntity.itemHandler.extractItem(0, 1, false);
+        pEntity.itemHandler.insertItem(0, container, false);
     }
 
     private static boolean hasFluidItemInSourceSlot(GemInfusingStationBlockEntity pEntity) {
@@ -285,9 +291,9 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
 
         Optional<GemInfusingStationRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
+                .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE, inventory, level);
 
-        if(hasRecipe(pEntity)) {
+        if (hasRecipe(pEntity)) {
 
             ItemStack inputStack1 = pEntity.itemHandler.extractItem(1, 1, false);
             ItemStack inputStack2 = pEntity.itemHandler.extractItem(2, 1, false);
@@ -313,30 +319,10 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
         }
 
         Optional<GemInfusingStationRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE,inventory,level);
+                .getRecipeFor(GemInfusingStationRecipe.Type.INSTANCE, inventory, level);
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
                 canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem());
-    }
-
-
-
-
-
-    public boolean onRightClick(Player player) {
-        // Check if the player is sneaking and the main hand is empty
-        if (player.isCrouching() && player.getMainHandItem().isEmpty()) {
-            // Check if the item in the specific slot (e.g., slot 4) is not empty
-            ItemStack slotStack = itemHandler.getStackInSlot(4);
-
-            if (!slotStack.isEmpty()) {
-                // Transfer the item from the slot to the player's main hand
-                player.setItemInHand(InteractionHand.MAIN_HAND, slotStack.copy());
-                itemHandler.setStackInSlot(4, ItemStack.EMPTY); // Clear the slot
-                return true; // Transfer successful
-            }
-        }
-        return false; // Transfer failed
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
@@ -346,7 +332,6 @@ public class GemInfusingStationBlockEntity extends BlockEntity implements MenuPr
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
         return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
     }
-
 
 
 }

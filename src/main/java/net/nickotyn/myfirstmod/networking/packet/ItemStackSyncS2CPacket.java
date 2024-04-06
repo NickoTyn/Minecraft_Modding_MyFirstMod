@@ -17,8 +17,8 @@ public class ItemStackSyncS2CPacket {
     private final ItemStackHandler itemStackHandler;
     private final BlockPos pos;
 
-    public ItemStackSyncS2CPacket(ItemStackHandler fluidStack, BlockPos pos) {
-        this.itemStackHandler = new ItemStackHandler();
+    public ItemStackSyncS2CPacket(ItemStackHandler itemStackHandler, BlockPos pos) {
+        this.itemStackHandler = itemStackHandler;
         this.pos = pos;
     }
 
